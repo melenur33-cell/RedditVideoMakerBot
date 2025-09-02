@@ -1,45 +1,45 @@
-# Reddit Video Maker Bot 🎥
+from gtts import gTTS
+from moviepy.editor import *
+import os
 
-All done WITHOUT video editing or asset compiling. Just pure ✨programming magic✨.
+# የሴት ድምፅ ስክሪፕት
+text = """
+ጤና ይስጥልኝ… 
+በአጭር ጊዜ ህይወታችሁን ለመቀየር… 
+እኛን ያማክሩን ፕሮፋይል ላይ ባለው ስልክ ይደውሉልን!
+"""
 
-Created by Lewis Menelaws & [TMRRW](https://tmrrwinc.ca)
+# ድምፅ ፋይል መፍጠር
+tts = gTTS(text=text, lang="am")
+tts.save("video_voice.mp3")
 
-<a target="_blank" href="https://tmrrwinc.ca">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/6053155/170528535-e274dc0b-7972-4b27-af22-637f8c370133.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/6053155/170528582-cb6671e7-5a2f-4bd4-a048-0e6cfa54f0f7.png">
-  <img src="https://user-images.githubusercontent.com/6053155/170528582-cb6671e7-5a2f-4bd4-a048-0e6cfa54f0f7.png" width="350">
-</picture>
+# የድምፁን ርዝመት ማወቅ
+audio = AudioFileClip("video_voice.mp3")
+duration = audio.duration  # የቪዲዮ ርዝመት
 
-</a>
+# ቀለም ያለው ቢጫ background ቪዲዮ
+clip = ColorClip(size=(720, 1280), color=(255, 255, 255), duration=duration)
 
-## Video Explainer
+# የታይሰር ጽሑፎች
+txt_clip1 = TextClip("ጤና ይስጥልኝ", fontsize=70, color='black', font="Noto-Sans-Ethiopic-Bold")\
+    .set_position("center").set_duration(3)
 
-[![lewisthumbnail](https://user-images.githubusercontent.com/6053155/173631669-1d1b14ad-c478-4010-b57d-d79592a789f2.png)
-](https://www.youtube.com/watch?v=3gjcY_00U1w)
+txt_clip2 = TextClip("በአጭር ጊዜ ህይወታችሁን ለመቀየር", fontsize=60, color='red', font="Noto-Sans-Ethiopic-Bold")\
+    .set_position("center").set_start(3).set_duration(5)
 
-## Motivation 🤔
+txt_clip3 = TextClip("ፕሮፋይል ላይ ባለው ስልክ ይደውሉልን!", fontsize=65, color='blue', font="Noto-Sans-Ethiopic-Bold")\
+    .set_position("center").set_start(8).set_duration(duration-8)
 
-These videos on TikTok, YouTube and Instagram get MILLIONS of views across all platforms and require very little effort.
-The only original thing being done is the editing and gathering of all materials...
+# በአንድ ላይ ማዋሃድ
+final = CompositeVideoClip([clip, txt_clip1, txt_clip2, txt_clip3])
 
-... but what if we can automate that process? 🤔
+# ድምፅ ማክረብ
+final = final.set_audio(audio)
 
-## Disclaimers 🚨
+# ቪዲዮ መቀመጥ
+final.write_videofile("final_video.mp4", fps=24)
 
-- **At the moment**, this repository won't attempt to upload this content through this bot. It will give you a file that
-  you will then have to upload manually. This is for the sake of avoiding any sort of community guideline issues.
-
-## Requirements
-
-- Python 3.10
-- Playwright (this should install automatically in installation)
-
-## Installation 👩‍💻
-
-1. Clone this repository
-2. Run `pip install -r requirements.txt`
-3. Run `python -m playwright install` and `python -m playwright install-deps`
+print("✅ ቪዲዮው ተጠናቀቀ። 'final_video.mp4' እንደተቀመጠ ይመለከቱ።")![1000058246](https://github.com/user-attachments/assets/f9bfc674-6ed4-4b89-93a3-936b8c756bca)
 
 **EXPERIMENTAL!!!!**
 
